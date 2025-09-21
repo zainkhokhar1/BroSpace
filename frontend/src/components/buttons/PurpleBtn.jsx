@@ -16,6 +16,7 @@ const FileInput = ({ Text, Icon, setImageUrl }) => {
         try {
             let formData = new FormData();
             formData.append("file", selectedFile);
+            // formData.append("ownerId", "1")
             const responseFromDB = await axios.post("http://192.168.0.105:3000/upload",
                 formData,
                 {
