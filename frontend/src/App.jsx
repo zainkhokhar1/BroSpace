@@ -1,9 +1,21 @@
 
 import React, { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
-import { Upload } from 'lucide-react'
-import PurpleBtn from './components/buttons/PurpleBtn'
 import axios from 'axios';
+import Sidebar from './components/common/Sidebar';
+import Header from './components/common/Header';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Dashboard from './pages/Dashboard';
+import Documents from './pages/Documents';
+import Images from './pages/Images';
+import Videos from './pages/Videos';
+import Audios from './pages/Audios';
+import DeleteFiles from './pages/DeleteFiles';
+import Settings from './pages/Settings';
 
 function App() {
 
@@ -38,42 +50,37 @@ function App() {
   }
 
   return (
-    <>
-      <div className='bg-white min-w-screen flex flex-col items-center justify-center gap-3 min-h-screen text-black/95 selection:bg-purple-200 p-2'>
+    <Router>
+      <>
+        <div className='bg-white w-screen overflow-x-hidden min-h-screen text-black/95 selection:bg-purple-200 flex items-start'>
 
-        <h2 className='text-4xl' style={{ fontSize: "30px", fontWeight: "900", color: "lightslategray" }}>
-          Upload file
-        </h2>
+          {/* sidebar */}
+          <Sidebar />
 
-        <PurpleBtn
-          Text={"Upload File"}
-          Icon={<Upload size={20} />}
-          setImageUrl={setImageUrl}
-        />
+          <div className='bg-[#FDFDFD] w-full min-h-screen'>
 
-        <button
-          ref={downloadRef}
-          className="flex h-10 w-32 max-w-40 gap-2 cursor-pointer rounded-lg !bg-[#8144fc] hover:bg-[#845cd3] !text-white font-semibold items-center justify-center relative"
-          onClick={handleDownload}
-        >
-          Download File
-        </button>
+            {/* header */}
+            <Header />
 
-        {
-          imageUrl && <div className='h-40 w-92 object-contain'>
-            <img src={imageUrl} alt="Image-preview" />
+            {/* main content pages */}
+            <div className='p-2'>
+              <Routes>
+                <Route path='/' element={<Dashboard />} />
+                <Route path='/documents' element={<Documents />} />
+                <Route path='/images' element={<Images />} />
+                <Route path='/videos' element={<Videos />} />
+                <Route path='/audios' element={<Audios />} />
+                <Route path='/deleted-files' element={<DeleteFiles />} />
+                <Route path='/settings' element={<Settings />} />
+              </Routes>
+            </div>
           </div>
-        }
 
-        <button className="flex h-10 max-w-40 gap-2 cursor-pointer rounded-lg bg-[#8144fc] hover:bg-[#845cd3] text-white font-semibold items-center justify-center relative"
-          onClick={handleDelete}
-        >
-          Delete File
-        </button>
+        </div>
+        <Toaster />
+      </>
 
-      </div >
-      <Toaster />
-    </>
+    </Router>
   )
 }
 
