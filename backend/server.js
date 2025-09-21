@@ -1,15 +1,16 @@
-import express, { urlencoded } from "express";
+import express from "express";
 import cors from "cors";
 import upload from "./middleware/multer.js";
 import fs from "fs/promises"
+import status from "express-status-monitor"
 
 const app = express();
-
-
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
+app.use(status())
 
+const HOST = '0.0.0.0';
 
 // testing routes for now!
 app.get('/', (req, res) => {
@@ -22,7 +23,7 @@ app.post('/upload', upload, (req, res) => {
 })
 
 app.get('/download', (req, res) => {
-    res.download("./uploads/image-1758388273365-upload.jpg", "test-image.png", (err) => {
+    res.download("/mnt/500gb/uploads/video-1758438006330-test.mp4", (err) => {
         if (err) {
             res.status(400).json({ message: "No file available for download" })
         }
@@ -35,7 +36,7 @@ app.get('/download', (req, res) => {
 app.delete('/delete', async (req, res) => {
     let fileName = req.body.fileName;
     try {
-        await fs.unlink(`./uploads/${fileName}`)
+        await fs.unlink(`/mnt/500gb/uploads/${fileName}`)
         return res.status(200).json({ message: "Delete file successfully!" })
     } catch (error) {
         console.log("Error:", error.message)
@@ -43,7 +44,7 @@ app.delete('/delete', async (req, res) => {
     }
 })
 
-app.listen(3000, () => {
+app.listen(3000, HOST, () => {
     console.log("listening on the port 3000");
 
 })
