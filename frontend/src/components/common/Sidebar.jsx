@@ -75,7 +75,7 @@ const Sidebar = () => {
         </div>
 
         {/* settings tab */}
-        <div className={`${selected == 6 ? "bg-white border shadow-xs" : ""} flex items-center gap-1 py-[9px] w-11/12 mx-auto mb-3 rounded-lg px-[10px] border-black/20 text-sm cursor-pointer`}
+        <div className={`${selected == 6 ? "bg-white border shadow-xs" : ""} flex items-center gap-1 py-[9px] w-11/12 mx-auto mb-5 rounded-lg px-[10px] border-black/20 text-sm cursor-pointer`}
             onClick={() => setSelected(6)}
         >
             {/* icon */}
